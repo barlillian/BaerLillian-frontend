@@ -1,0 +1,674 @@
+/* ======= General Layout ======= */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* (index.html) content part exclude header & footer*/
+main {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* (lesson.html) content part above chatbox exclude header & footer */
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 100%; /* Ensures it does not exceed viewport */
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* ======= Header Styling (index.html) ======= */
+header {
+  background-color: #f5c6cb;
+  text-align: center;
+  height: 120px;
+  box-sizing: border-box;
+  width:100%;
+}
+
+header h1 {
+  font-size: 22px;
+  line-height: 1.8;
+}
+
+.header-section p {
+  font-size: 17px;
+}
+
+/* ======= Footer Styling (Both index.html and lesson.html) ======= */
+footer {
+  font-size: 12px;
+  color: lightgray;
+  border-top: 1px solid gray;
+  text-align: center;
+  width: 100%;
+  background-color: white;
+  margin-top: auto; /* Pushes footer to the bottom */
+  position: relative;
+}
+
+/* ======= Lesson List (index.html) ======= */
+.lesson-list ul {
+  padding-left: 25px;
+  font-size: 17px;
+}
+
+.lesson-list li {
+  padding: 5px 0;
+  list-style-type: disc;
+}
+
+.lesson-list a {
+  text-decoration: none;
+  color: black;
+}
+
+.lesson-list a:hover {
+  color: #d847af;
+  font-weight: bold;
+}
+
+/* ======= Lesson Page Styling (lesson.html) ======= */
+/* Font size for Topic */
+#lesson-topic {
+  font-size: 26px;  /* Example: Adjust the font size for "Topic:" */
+  font-weight: bold;
+}
+
+/* Objective label styling */
+.objective-label {
+  font-size: 20px; /* Larger font size for "Objective:" */
+  font-weight: bold;
+}
+
+/* Objective text styling */
+.objective-text {
+  font-size: 17px;
+  font-weight: normal;
+  padding-bottom: 20px;
+}
+
+/* Font size for Task List Overview and task-list-static */
+.task-list-container h3 {
+  font-size: 20px;  /* Example: Adjust the font size for "Task List Overview" */
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.task-list-static {
+  list-style-type: disc;
+  margin-left: 20px;
+  padding: 2;
+  font-size: 17px;
+}
+
+.task-list-static li {
+  font-size: 1rem;
+  margin: 5px 0;
+  position: relative;
+}
+
+/* ======= Buttons Styling (lesson.html) ======= */
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+  z-index: 2;
+}
+
+.start-button,
+.clear-button,
+.back-button {
+  background-color: #f5c6cb;
+  color: #333;
+}
+
+/* Redo button style (Recording again)*/
+button.redo-btn {
+  background-color: #a9d4ff;
+  padding: 5px; 
+}
+
+button.redo-btn:hover {
+  background-color: #6bb3fb;
+  transform: scale(1.3);
+}
+
+/* Confirm button style */
+button.confirm-btn {
+  background-color: #a9d4ff;
+  padding: 5px; 
+}
+
+button.confirm-btn:hover {
+  background-color: #6bb3fb;
+  transform: scale(1.3);
+}
+/* ======= Chat Section (lesson.html) ======= */
+/* Chat section is hidden initially */
+#chat-section {
+  display: none;
+}
+
+.chat-section {
+  width: 100%;
+  max-width: 1400px;
+  max-height: 400px; 
+  overflow-y: auto; /* Enables scrolling if content exceeds max height */
+  margin: 0 auto;  /* Center the chat window and button */
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  position: relative;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 60px;
+  height: 100%;
+  overflow: hidden; /* Prevents the entire section from exceeding the viewport */
+  justify-content: flex-end;
+}
+
+/* ======= Chat Header (lesson.html) ======= */
+.chat-header {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  flex-wrap: nowrap; /* Prevents wrapping */
+  white-space: nowrap;
+}
+
+/* ======= Chat Title (lesson.html) ======= */
+.chat-title {
+  margin-right: 8px;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+/* ======= Userlevel-Buttons (lesson.html) ======= */
+.user-level-container {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between buttons */
+  flex-wrap: nowrap;
+}
+
+/* user-level-button style */
+.user-level-button {
+  background-color: #f5c6cb; /* Pink */
+  color: #333;
+  border: none;
+  padding: 6px 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  text-align: center;
+  min-width: 50px; /* Ensures buttons have a proper size */
+}
+
+/* Active state (when selected) */
+.user-level-button.active {
+  background-color: #d847af; /* Selected button remains orange */
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* Chat content(three-column-layout): bear image and chat messages side by side */
+.chat-content {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px; /* Adds spacing after the header */
+  justify-content: space-between;
+  text-wrap:wrap;
+  gap: 3px; /* Adjust this to reduce space between the columns */
+}
+
+/* ======= Bear Image Container (lesson.html) ======= */
+#bear-animation-container {
+  width: 300px;
+  height: 300px;
+  margin-right: 2px;
+}
+
+#bear-animation {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hide any legacy bear container if it exists */
+#bear-image-container {
+  display: none;
+}
+
+/* ======= Chat Window (lesson.html) ======= */
+.chat-window {
+  flex-grow: 1;  /* Makes it take up available space but not push out the button */
+  max-height: 300px;
+  min-height: 200px;
+  overflow-y: auto; /* Enables scrolling */
+  padding-bottom: 10px; /* Extra space before mic button */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  z-index: 1;
+  text-wrap:normal;
+  display: flex;
+  width: 100%; /* Ensure the chat window takes the full width */
+  box-sizing: border-box; /* Prevent overflow due to padding */
+  position: relative;
+}
+
+/* ======= Speak Button (lesson.html) ======= */
+.mic-button {
+  width: 100%;
+  font-size: 1rem;
+  border-radius: 5px;
+  background-color: #f5c6cb;
+  color: #333;
+  cursor: pointer;
+  z-index: 10; /* Make sure it's above other content */
+  text-align: center;
+  position: relative; /* Make it relative to align properly */
+  margin-top: 5px;    /* Space above the mic button */
+  box-sizing: border-box; /* Prevents overflow */
+  display: flex;
+  margin-left:0px;
+}
+
+/* ======= Responsive Adjustments for Small Screens ======= */
+@media screen and (max-width: 600px) {
+  #bear-animation-container {
+    width: 200px;
+    height: 250px;
+    margin-right: 1px;
+  }
+  
+  .chat-content {
+    flex-direction: column;
+    text-wrap: wrap;
+  }
+  
+  .chat-window {
+    margin-left: 0;
+    padding: 5px;
+    text-wrap: wrap;
+  }
+}
+
+/* ======= Hint Button and floating popover hint list (lesson.html ======= */
+.hint-button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #d847af; 
+  text-decoration: underline;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.3s ease;
+}
+
+.hint-button:hover {
+  color: #d847af;
+}
+
+/* Floating Popover Styling */
+.hints-popover {
+  position: absolute;
+  background-color: #ddf7fa;
+  box-shadow: 0 4px 8px rgb(250, 222, 241);
+  border-radius: 30px;
+  padding: 8px;
+  max-width: 900px;
+  width: auto;
+  z-index: 950;
+  display: none; /* Initially hidden */
+  animation: fadeIn 0.2s;
+  margin-right:5px;
+}
+
+/* Introductory Line Styling */
+.hint-intro-line {
+  font-size: 1rem;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #666;
+  text-decoration: underline;
+}
+
+/* Group Header: Category and Scenario */
+.hint-group-header {
+  margin-bottom: 5px; /* Space below the header */
+}
+
+/* "+" icon for expandable categories */
+.expand-icon {
+  font-size: 1.2rem;
+  color: #276971;
+  font-weight: bolder; 
+  margin-left: 9px;
+  margin-right: 9px;
+}
+
+/* Category styling */
+.hint-group-header strong {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #666;
+  margin-right: 8px;
+}
+
+/* Scenario styling */
+.scenario-text {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Hint Items inside the popover */
+.hint-item {
+  padding: 0px 0;
+  display: flex;
+  align-items: normal;
+  gap: 0px;
+  flex-direction: row;  /* Stack the elements vertically */
+  white-space: normal;
+  margin-top:3px;
+}
+
+.hint-item:hover {
+  background-color: #84ecf8;
+  cursor: pointer;
+}
+
+/* Audio Button Styling */
+.audio-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+  margin-right: 3px;  /* Adjust the margin if needed */
+}
+
+.audio-button:hover {
+  transform: scale(1.2);
+}
+
+/* Container for German sentence and translation */
+.sentence-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* German text styling */
+.german-text {
+  color: #444;
+  font-size: 1rem;  /* Adjust size if needed */
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* Translation Text */
+.translation {
+  color: #555;
+  font-style: italic;
+  font-size: 0.9rem;  /* Make the English translation smaller */
+  margin-top: 2px;  /* Space between German text and translation */
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Hint Group Header when hovered */
+.hint-group-header:hover {
+  background-color: #84ecf8;
+  cursor: pointer;
+}
+
+/* Initially collapsed container for hints */
+.hints-container {
+  padding-left: 3px;
+  display: none;  /* Initially hidden */
+}
+
+/* Expand/Collapse icon toggle behavior */
+.hint-group-header .expand-icon {
+  transition: transform 0.3s ease;
+}
+
+.hints-container.show {
+  display: block;
+}
+
+.hints-container.hide {
+  display: none;
+}
+
+/* ======= Message Styles (lesson.html) ======= */
+.message {
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  max-width: 100%; /* Prevents messages from exceeding the container width */
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.user-message {
+  background-color: #e0f7fa;
+  text-align: left;
+}
+
+.ai-message {
+  background-color: #ffe0e6;
+  text-align: left;
+}
+
+.real-time-text {
+  background-color: #e0f7fa; /* Same as .user-message background */
+  text-decoration: underline;
+  text-align: left;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  max-width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+/* ======= User Error Feedback Highlighting Styles (lesson.html. AI chatbox-middle column)======= */
+.error-text {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Color codes for error categories */
+.error-text {
+  color: rgb(181, 42, 65);
+  font-weight: bold;
+}
+
+#error-tooltip {
+  position: absolute;
+  background-color: #666;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  white-space: normal;
+  z-index: 1000;
+  overflow-wrap: normal;
+  max-width: none; /* Removes any limit on the width */
+  overflow-wrap: break-word; /* Ensures long words break correctly */
+  word-break: break-word; /* Prevents text from overflowing the container */
+}
+
+/* ======= Chat Content Layout ((lesson.html. AI chatbox-left, middle, right column)) ======= */
+/* Left column for Bear animation */
+.left-column {
+  flex: 0 0 13%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0; /* Prevent content from overflowing */
+  padding-left: 1px;
+  padding-right: 1px; /* Add small space between left column and middle column */
+}
+
+/* Middle column for Chat window */
+.middle-column {
+  flex: 0 0 43%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px;
+  justify-content: flex-end; /* Ensure button stays at the bottom */
+  height: 100%; /* Allow it to take full height */
+  min-width: 0; /* Prevent content from overflowing */
+  padding-left: 2px; /* Reduce space between middle and left column */
+  padding-right: 2px; /* Reduce space between middle and right column */
+}
+
+/* ======= Right Column: Task Progress and Progress Bar ======= */
+.right-column {
+  flex: 0 0 42%;
+  max-height: 400px;
+  width: 500px;
+  max-width: 40%;
+  overflow-y: auto;
+  word-break: normal;
+  word-wrap: normal;
+  min-width: 0; /* Prevent unnecessary expansion */
+  white-space: normal; /* Ensures text wraps */
+  box-sizing: border-box;
+  padding-left: 3px;
+  padding-right: 1px; /* Reduce space between the right column and the middle column */
+}
+
+/* Container for task progress text and progress bar */
+.task-progress-container {
+  display: flex;
+  align-items: center; /* Aligns items (text and progress bar) vertically centered */
+  gap: 10px; /* Space between text and progress bar */
+  margin-bottom: 10px;
+  width: 100%; /* Ensure it takes up the full width of the container */
+}
+
+/* Style for task progress */
+#task-progress {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0; /* Removes any default margin */
+}
+
+/* Style the progress bar */
+progress {
+  height: 20px;
+  border-radius: 5px;
+  appearance: none;
+  width: 50%; /* Ensures the progress bar is responsive */
+  max-width: 100%; /* Ensures it doesn't grow beyond the container's width */
+}
+
+progress::-webkit-progress-bar {
+  background-color: #e3e0e0;
+  border-radius: 5px;
+}
+
+progress::-webkit-progress-value {
+  background-color: #f5c6cb; 
+  border-radius: 5px;
+}
+
+/* ======= Dynamic Task List (task-list-progress) Styling (lesson.html. AI chatbox-right column)======= */
+#task-list-progress {
+  list-style: none; /* Remove default bullet */
+  width: 100%;                 /* Force container to use full width */
+  max-width: 100%;  /* Ensures it doesn't overflow */
+  max-height: 300px;
+  padding-left: 0;
+  padding-right: 10px;
+  white-space: normal;         /* Allow text wrapping */
+  box-sizing: border-box;      /* Include padding in width */
+  overflow-x: hidden;          /* Prevent horizontal scrolling */
+}
+
+/* Ensure the text inside each dynamic task wraps properly */
+.task-list-progress {
+  width: 100%;
+  max-width: 100%;  /* Ensures it doesn't overflow */
+  overflow-wrap: normal;  
+  word-break: normal;      
+  white-space: normal; /* Allows text wrapping */
+ 
+}
+
+/* Style each list item in the dynamic task list */
+.task-list-progress li {
+  display: block; /* Ensures it behaves like a full-width block */
+  width: 100%; /* Prevents expanding beyond its container */
+  max-width: 100%;
+  white-space: normal; /* Allows proper text wrapping */
+  overflow-wrap: normal;   
+  word-break: normal;       
+  position: relative;
+  padding-left: 20px; /* space for custom bullet */
+  margin: 3px 0;
+  line-height: 1.3; /* Improve readability */
+  box-sizing: border-box;      /* Include padding in width */
+  min-width: 0;              /* Allow shrinking in flex container */
+}
+
+/* Add this to your CSS file or style section */
+.extracted-answer {
+  color: #FFFFF0;
+  font-weight: bold;
+  text-wrap: wrap;
+  background-color: #d847af;
+  padding: 2px 5px;
+  border-radius: 3px;
+  max-width: 100%;
+}
+
+/* Custom bullet using ::before, ensuring only one appears */
+.task-list-progress li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.2;
+  display: inline-block;
+}

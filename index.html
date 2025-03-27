@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willkommen bei BärLillian!</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="header-section">
+        <div class="header-line"></div>
+        <h1>Willkommen bei BärLillian! 🐻‍❄️</h1>
+        <p>Ich bin deine deutsche Freundin Lillian. Hier beginnen wir unsere Gespräche auf Deutsch.</p>
+        <div class="header-line"></div>
+    </header>
+
+    <!-- Content Section -->
+    <main class="page-content">
+        <h2 class="topic-header">Topic:</h2>
+        <div class="lesson-list">
+            <ul id="lesson-list">
+                <!-- Dynamic lesson list will be inserted here -->
+            </ul>
+        </div>
+
+        <!-- Login Form Section -->
+        <section class="login-form-section">
+            <h2>Login</h2>
+            <form action="/submit-login" method="POST">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" autocomplete="username" required />
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required />
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>© 2025 BärLillian Sprachtraining</p>
+    </footer>
+
+    <!-- Fetch the lessons data from the API and display unique lessons as hyperlinks -->
+    <script>
+        fetch('/api/lessons')
+            .then(response => response.json())
+            .then(lessons => {
+                const lessonListElement = document.getElementById('lesson-list');
+                lessons.forEach(lesson => {
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    // Hyperlink to the lesson webpage
+                    link.href = `/lessons/${lesson.lesson_number}`;
+                    link.textContent = `Lesson ${lesson.lesson_number}: ${lesson.topic}`;
+                    listItem.appendChild(link);
+                    lessonListElement.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('❌ Error retrieving lessons:', error));
+    </script>
+</body>
+
+</html>

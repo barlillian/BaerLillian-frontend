@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="lesson-title"></title>
+  <!-- Link to the CSS file -->
+  <link rel="stylesheet" href="/static/styles.css">
+  <!-- Load Lottie library for bear animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- All page content goes inside here -->
+
+    <!-- Lesson Header -->
+    <div class="lesson-header">
+      <h1 id="lesson-topic">Topic: </h1>
+      <p>
+        <strong class="objective-label">Objective:</strong>
+        <span id="objective-text" class="objective-text">This is the objective text.</span>
+      </p>
+    </div>
+
+    <!-- Static Task List Overview -->
+    <div class="task-list-container">
+      <h3>Task List Overview:</h3>
+      <ul id="task-list" class="task-list-static">
+        <!-- Static task list will be populated here on page load -->
+      </ul>
+    </div>
+
+    <!-- Button Container -->
+    <div class="button-container">
+      <button id="start-button" class="start-button">Start Your Conversation</button>
+      <button id="clear-button" class="clear-button">Clear the Conversation</button>
+      <button class="back-button" onclick="window.location.href='/'">Back to Homepage</button>
+    </div>
+
+    <!-- Chat Section (Initially hidden) -->
+    <div id="chat-section" class="chat-section" style="display: none;">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="chat-title">
+          Chat with Lillian at 
+        </div>
+        <!-- User Level Selection -->
+        <div class="user-level-container">
+          <button class="user-level-button" data-level="A1">A1</button>
+          <button class="user-level-button" data-level="A2">A2</button>
+          <button class="user-level-button" data-level="B1">B1</button>
+          level
+        </div>
+        <!-- Hint Button -->
+        <button id="hint-button" class="hint-button">💡 Hints</button>
+      </div>
+      
+      <!-- Chat Content: Three-column layout -->
+      <div class="chat-content">
+        <!-- Left Column: Bear Animation -->
+        <div class="left-column" id="bear-animation-container">
+          <div id="bear-animation" style="width: 250px; height: 250px;"></div>
+        </div>
+
+        <!-- Middle Column: Chat Window -->
+        <div class="middle-column">
+          <div class="chat-window" id="messages"></div>
+          <!-- Speak Button Below AI Dialogue -->
+          <button id="mic-button" class="mic-button">🎤 Speak</button>
+        </div>
+
+        <!-- Right Column: Dynamic Task List Progress -->
+        <div class="right-column">
+          <div class="task-progress-container">
+            <h4 id="task-progress">Task Progress: 0/0</h4>
+            <progress id="progress-bar" value="0" max="100"></progress>
+          </div>
+          <ul id="task-list-progress" class="task-list-progress">
+            <!-- Dynamic task list will update during conversation -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  <!-- Footer inside .container -->
+  <footer>
+    <p>© 2025 BärLillian Sprachtraining</p>
+  </footer>
+
+  <!-- Inline script to fetch lesson data and populate header and static task list -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const lessonNumber = window.location.pathname.split('/')[2]; // Retrieve user level from session storage (or set default)
+      
+      // Retrieve user level from session storage (or set default)
+      let userLevel = sessionStorage.getItem("userLevel") || "A1";
+      
+      // Fetch lesson data from the API
+      fetch(`/api/lessons/${lessonNumber}?userLevel=${userLevel}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log("✅ Lesson data loaded-Static :", data);
+          // Populate lesson header with fetched data
+          document.getElementById('lesson-title').innerText = `${data.topic} - Lesson`;
+          document.getElementById('lesson-topic').innerText = `Topic: ${data.topic}`;
+          document.getElementById('objective-text').innerText = `${data.objective}`;
+          
+          // Populate the static task list overview (#task-list)
+          const taskList = document.getElementById('task-list');
+          taskList.innerHTML = "";
+          data.task_list.forEach(task => {
+            const listItem = document.createElement('li');
+            if (typeof task === 'object') {
+              if (task.task) {
+                listItem.innerText = task.task; // Only show the main task text
+              } else {
+                const numericKeys = Object.keys(task).filter(key => /^\d+$/.test(key));
+                numericKeys.sort((a, b) => Number(a) - Number(b));
+                listItem.innerText = numericKeys.map(key => task[key]).join('');
+              }
+            } else if (typeof task === 'string') {
+              listItem.innerText = task;
+            }
+            taskList.appendChild(listItem);
+          });
+        })
+        .catch(err => {
+          console.error('❌ Failed to load lesson:', err);
+        });
+    });
+  </script>
+  <!-- Include the conversation script -->
+  <script type="module" src="/js/conversation.js"></script>
+</body>
+</html>
